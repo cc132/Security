@@ -32,13 +32,13 @@ public class CustomFilterInvocationSecurityMetadataSource implements FilterInvoc
      */
     private void getResourcePermission(){
         map = new HashMap<>();
-
         /**
          * 创建两个权限：ROLE_ADMIN 和 ROLE_EMPLOYEE
          */
         ConfigAttribute adminRole = new SecurityConfig("ROLE_ADMIN");
         ConfigAttribute employeeRole = new SecurityConfig("ROLE_EMPLOYEE");
         ConfigAttribute userRole = new SecurityConfig("USER");
+        ConfigAttribute vipRole = new SecurityConfig("VIP");
         /**
          * 创建两个权限集合
          */
@@ -48,9 +48,11 @@ public class CustomFilterInvocationSecurityMetadataSource implements FilterInvoc
         employeeUrlRoles.add(employeeRole);
         List<ConfigAttribute> userUrlRoles = new ArrayList<>();
         userUrlRoles.add(userRole);
+        List<ConfigAttribute> vipUrlRoles = new ArrayList<>();
+        vipUrlRoles.add(vipRole);
         /**
          * 设置资源（url）所需要的权限（角色）集合
-         */
+         */ 
         map.put("/toAdmin", adminUrlRoles);
         map.put("/toEmployee", employeeUrlRoles);
         map.put("/toUser", null);
@@ -58,7 +60,8 @@ public class CustomFilterInvocationSecurityMetadataSource implements FilterInvoc
         map.put("/toHome", null);
         map.put("/getPrincipal", null);
         map.put("/getUserDetails", null);
-        map.put("/vip", userUrlRoles);
+        map.put("/user", userUrlRoles);
+        map.put("/vip", vipUrlRoles);
     }
 
     /**

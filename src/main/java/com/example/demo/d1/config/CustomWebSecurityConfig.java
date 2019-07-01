@@ -4,6 +4,7 @@ import javax.sql.DataSource;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
@@ -12,6 +13,8 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.access.ExceptionTranslationFilter;
+import org.springframework.security.web.access.intercept.FilterSecurityInterceptor;
 import org.springframework.security.web.authentication.rememberme.JdbcTokenRepositoryImpl;
 import org.springframework.security.web.authentication.rememberme.PersistentTokenRepository;
 
@@ -51,14 +54,17 @@ public class CustomWebSecurityConfig extends WebSecurityConfigurerAdapter{
      */
     @Override
     protected void configure(HttpSecurity http) throws Exception {
+    	//http.exceptionHandling().authenticationEntryPoint(authenticationEntryPoint)
         http
             .csrf()
                 .disable()
             .apply(customUsernamePasswordAuthenticationConfig)
+//            .and()
+//            .exceptionHandling().accessDeniedHandler(new CustomAccessDeniedHandler())
                 .and()
                 .authorizeRequests()
                 .antMatchers("/").permitAll()
-                .antMatchers("/user/**").hasAuthority("USER")
+                //.antMatchers("/user/**").hasAuthority("USER")
                 .and()
                 .formLogin().loginPage("/login")
                 .and()
@@ -70,7 +76,11 @@ public class CustomWebSecurityConfig extends WebSecurityConfigurerAdapter{
                     .key("unique-and-secret")
                     .rememberMeCookieName("remember-me-cookie-name")
                     .tokenRepository(getPersistentTokenRepository())
-                    .tokenValiditySeconds(24 * 60 * 60);
+                    .tokenValiditySeconds(24 * 60 * 60)
+                .and()
+                .exceptionHandling().accessDeniedHandler(new CustomAccessDeniedHandler());
+//                .and()
+//               .addFilterBefore(new RewriteAccessDenyFilter(), FilterSecurityInterceptor.class);
     }
 
     /**

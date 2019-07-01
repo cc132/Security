@@ -11,6 +11,8 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.stereotype.Component;
 
+import com.example.demo.d1.exception.NoAuthException;
+
 /**
  * 自定义的权限控制管理器
  */
@@ -24,7 +26,7 @@ public class CustomAccessDecisionManager implements AccessDecisionManager {
      * @param configAttributes  由CustomFilterInvocationSecurityMetadataSource.getAttributes(object)返回的请求的资源（url）所需要的权限（角色）集合
      */
     @Override
-    public void decide(Authentication auth, Object object, Collection<ConfigAttribute> configAttributes) throws AccessDeniedException, InsufficientAuthenticationException {
+    public void decide(Authentication auth, Object object, Collection<ConfigAttribute> configAttributes) throws AccessDeniedException, InsufficientAuthenticationException{
         /**
          * 如果请求的资源不需要权限，则直接放行
          */
@@ -55,4 +57,6 @@ public class CustomAccessDecisionManager implements AccessDecisionManager {
     public boolean supports(Class<?> clazz) {
         return true;
     }
+    
+    
 }

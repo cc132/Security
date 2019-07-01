@@ -20,7 +20,7 @@ public class CustomAuthenticationFailureHandler extends SimpleUrlAuthenticationF
 	private ObjectMapper objectMapper;
 	
 	public CustomAuthenticationFailureHandler() {
-		this.setDefaultFailureUrl("/failure.html");
+		this.setDefaultFailureUrl("/failure");
 	}
 	@Override
 	    public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response, AuthenticationException exception) throws IOException, ServletException {
@@ -32,7 +32,7 @@ public class CustomAuthenticationFailureHandler extends SimpleUrlAuthenticationF
 	            response.setContentType("application/json;charset=UTF-8");
 	            response.getWriter().write(objectMapper.writeValueAsString(exception.getMessage()));
 	        } else {
-	        	System.out.println("==============failure");
+	        	//System.out.println("===页面跳转");
 	            super.onAuthenticationFailure(request, response, exception);
 	        }
 	    }

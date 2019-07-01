@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 public class UserController {
 
     @GetMapping("/user")
-    //@PreAuthorize("permitAll")
+    @PreAuthorize("permitAll")
     public String user(@AuthenticationPrincipal Principal principal, Model model){
         model.addAttribute("username", principal.getName());
         return "user/user";
@@ -21,7 +21,7 @@ public class UserController {
     
     //hasAuthority和hasRole的区别
     @GetMapping("/vip")
-    //@PreAuthorize("hasRole('USER')")
+    @PreAuthorize("hasRole('USER')")
     @ResponseBody
     public String vip() {
     	return "vip 功能";

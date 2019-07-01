@@ -27,7 +27,6 @@ public class DbUserDetailsService implements UserDetailsService {
 		UserDO userDO = userService.getByUsername(username);
 		if (userDO == null) {
 			throw new UsernameNotFoundException("用户不存在！");
-			//return null;
 		}
 		List<SimpleGrantedAuthority> simpleGrantedAuthorities = new ArrayList<>();
 		simpleGrantedAuthorities.add(new SimpleGrantedAuthority("USER"));
