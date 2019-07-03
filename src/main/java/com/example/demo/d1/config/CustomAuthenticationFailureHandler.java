@@ -18,22 +18,27 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 public class CustomAuthenticationFailureHandler extends SimpleUrlAuthenticationFailureHandler {
 	@Autowired
 	private ObjectMapper objectMapper;
-	
+
 	public CustomAuthenticationFailureHandler() {
 		this.setDefaultFailureUrl("/failure");
 	}
+
 	@Override
-	    public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response, AuthenticationException exception) throws IOException, ServletException {
-	        /**
-	         * 如果配置ConfigConstant.LOGIN_RESPONSE_TYPE="JSON"，则返回JSON，否则使用页面跳转
-	         */
-	        if("JSON".equalsIgnoreCase("json1")) {
-	            response.setStatus(HttpStatus.INTERNAL_SERVER_ERROR.value());
-	            response.setContentType("application/json;charset=UTF-8");
-	            response.getWriter().write(objectMapper.writeValueAsString(exception.getMessage()));
-	        } else {
-	        	//System.out.println("===页面跳转");
-	            super.onAuthenticationFailure(request, response, exception);
-	        }
-	    }
+	public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response,
+			AuthenticationException exception) throws IOException, ServletException {
+		/**
+		 * 如果配置ConfigConstant.LOGIN_RESPONSE_TYPE="JSON"，则返回JSON，否则使用页面跳转
+		 */
+		if ("JSON".equalsIgnoreCase("json1")) {
+			response.setStatus(HttpStatus.INTERNAL_SERVER_ERROR.value());
+			response.setContentType("application/json;charset=UTF-8");
+			response.getWriter().write(objectMapper.writeValueAsString(exception.getMessage()));
+		} else {
+			if (request.getParameter("username") == null || request.getParameter("password") == null) {
+				System.out.println("用户名或者密码为空");
+			}
+			System.out.println(request.getParameter("username") + "==1231313131");
+			super.onAuthenticationFailure(request, response, exception);
+		}
+	}
 }

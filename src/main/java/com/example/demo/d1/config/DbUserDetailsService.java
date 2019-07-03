@@ -26,7 +26,7 @@ public class DbUserDetailsService implements UserDetailsService {
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		UserDO userDO = userService.getByUsername(username);
 		if (userDO == null) {
-			throw new UsernameNotFoundException("用户不存在！");
+			throw new UsernameNotFoundException("用户不存在131313！");
 		}
 		List<SimpleGrantedAuthority> simpleGrantedAuthorities = new ArrayList<>();
 		simpleGrantedAuthorities.add(new SimpleGrantedAuthority("USER"));

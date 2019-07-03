@@ -76,7 +76,7 @@ public class CustomWebSecurityConfig extends WebSecurityConfigurerAdapter{
                     .key("unique-and-secret")
                     .rememberMeCookieName("remember-me-cookie-name")
                     .tokenRepository(getPersistentTokenRepository())
-                    .tokenValiditySeconds(24 * 60 * 60)
+                    .tokenValiditySeconds(1 * 60)
                 .and()
                 .exceptionHandling().accessDeniedHandler(new CustomAccessDeniedHandler());
 //                .and()
