@@ -11,6 +11,8 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import com.example.demo.mybatis.domain.City;
+import com.example.demo.mybatis.service.CityService;
 import com.example.demo.redis.User;
 
 @RunWith(SpringRunner.class)
@@ -21,7 +23,19 @@ public class SecurityApplicationTests {
 	
 	@Autowired
 	@Qualifier("template")
-	private RedisTemplate<String,User> redisTemplate;
+	private RedisTemplate<String,User> template;
+	
+	@Autowired
+	private RedisTemplate<Object, Object> redisTemplate;
+	
+	@Autowired
+	private CityService cityService;
+	
+	@Test
+	public void testInternalRedisTemplate() throws Exception {
+		redisTemplate.opsForValue().set("s黄", new User("你好", 2012));
+		//System.out.println(redisTemplate.opsForValue().get("s黄"));
+	}
 	@Test
 	public void testStringRedisTemplate() throws Exception {
 		stringRedisTemplate.opsForValue().set("aaaa", "111");
@@ -30,9 +44,15 @@ public class SecurityApplicationTests {
 	
 	@Test
 	public void testRedisTemplate() throws Exception {
-        User user = new User("csss", 20);
-        redisTemplate.opsForValue().set(user.getUsername(), user);
+        User user = new User("你好", 20);
+        template.opsForValue().set(user.getUsername(), user);
 
-        Assert.assertEquals(20, redisTemplate.opsForValue().get("csss").getAge().longValue());
+        Assert.assertEquals(20, template.opsForValue().get("csss").getAge().longValue());
+	}
+	
+	@Test
+	public void testCityService() throws Exception {
+		City city = cityService.findCityByName("盐城市");
+		System.out.println(city);
 	}
 }
