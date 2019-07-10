@@ -71,6 +71,11 @@
 			<artifactId>druid</artifactId>
 			<version>${druid}</version>
 		</dependency>
+		<!-- 加入日志依赖 -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-logging</artifactId>
+		</dependency>
 		<!-- 添加热部署 -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
