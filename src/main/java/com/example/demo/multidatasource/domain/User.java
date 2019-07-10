@@ -1,8 +1,15 @@
 package com.example.demo.multidatasource.domain;
 
-public class User {
+import java.io.Serializable;
+
+public class User implements Serializable{
 
     /**
+	 * 
+	 */
+	private static final long serialVersionUID = 5538686856348741385L;
+
+	/**
      * 城市编号
      */
     private Long id;

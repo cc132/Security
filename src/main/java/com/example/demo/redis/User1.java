@@ -2,7 +2,7 @@ package com.example.demo.redis;
 
 import java.io.Serializable;
 
-public class User implements Serializable{
+public class User1 implements Serializable{
 	
 	/**
 	 * 
@@ -10,11 +10,11 @@ public class User implements Serializable{
 	private static final long serialVersionUID = 1L;
 	private String username;
 	private Integer age;
-	public User(String username, Integer age) {
+	public User1(String username, Integer age) {
 		this.username = username;
 		this.age = age;
 	}
-	public User() {
+	public User1() {
 	}
 	public String getUsername() {
 		return username;
