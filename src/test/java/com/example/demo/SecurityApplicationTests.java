@@ -11,6 +11,7 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import com.example.demo.multidatasource.service.UserService;
 import com.example.demo.mybatis.domain.City;
 import com.example.demo.mybatis.service.CityService;
 import com.example.demo.redis.User;
@@ -31,6 +32,8 @@ public class SecurityApplicationTests {
 	@Autowired
 	private CityService cityService;
 	
+	@Autowired
+	private UserService userService;
 	@Test
 	public void testInternalRedisTemplate() throws Exception {
 		redisTemplate.opsForValue().set("s黄", new User("你好", 2012));
@@ -54,5 +57,11 @@ public class SecurityApplicationTests {
 	public void testCityService() throws Exception {
 		City city = cityService.findCityByName("盐城市");
 		System.out.println(city);
+	}
+	
+	@Test
+	public void testMultiDataSource() throws Exception {
+		com.example.demo.multidatasource.domain.User user = userService.findByName("黄春超");
+		System.out.println(user.toString());
 	}
 }
