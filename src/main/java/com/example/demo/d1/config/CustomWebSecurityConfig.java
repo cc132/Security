@@ -47,7 +47,7 @@ public class CustomWebSecurityConfig extends WebSecurityConfigurerAdapter{
     public void configure(WebSecurity web) throws Exception {
         web.ignoring()
                 .antMatchers(
-                        "/css/**","/failure.html","/failure");
+                        "/css/**","/failure.html","/failure","/excel/export");
     }
     /**
      * Http安全配置
